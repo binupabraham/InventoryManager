@@ -1,0 +1,37 @@
+﻿@model InventoryManager.Domain.DomainModels.WarehouseSizeModel
+
+@{
+    ViewBag.Title = "Configure Warehouse Limits";
+}
+<h2>@ViewBag.Title</h2>
+
+
+@using (Html.BeginForm("SetWarehouseLimit", "Inventory", FormMethod.Post))
+{
+    @Html.AntiForgeryToken();
+    @Html.ValidationSummary(true);
+    <fieldset>
+    
+        <div class="form-group">
+            @Html.LabelFor(model => model.WarningLevel)
+            <input type="text" class="form-control" id="WarningLevel" name="WarningLevel" value="@Model.WarningLevel" autocomplete="off" />
+         
+            @Html.ValidationMessageFor(model => model.WarningLevel)
+        </div>
+
+        <div class="form-group">
+    @Html.LabelFor(model => model.TotalCapacity)
+
+            <input type="text" class="form-control" id="TotalCapacity" name="TotalCapacity" value="@Model.TotalCapacity" autocomplete="off" />
+    @Html.ValidationMessageFor(model => model.TotalCapacity)
+</div>
+
+        <p>
+            <input type="submit" value="Configure" class="btn-primary" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "Inventory", new { @class = "btn-primary" })
+</div> 

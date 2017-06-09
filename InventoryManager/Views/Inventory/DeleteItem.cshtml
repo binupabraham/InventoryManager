@@ -1,0 +1,50 @@
+﻿@model InventoryManager.Domain.DomainModels.InventoryItemModel
+
+@{
+    ViewBag.Title = "Delete Inventory Item";
+}
+<h2>@ViewBag.Title</h2>
+
+
+@using (Html.BeginForm("DeleteItem", "Inventory", FormMethod.Post))
+{
+    @Html.AntiForgeryToken();
+    @Html.ValidationSummary(true);
+    <fieldset>
+        @Html.HiddenFor(x => x.ID)
+        <div class="form-group">
+            <label for="Code">Code</label>
+            <input type="text" class="form-control" id="Code" name="Code" value="@Model.Code" autocomplete="off" readonly />
+            @*@Html.TextBoxFor(model => model.Code)*@
+            @Html.ValidationMessageFor(model => model.Code)
+        </div>
+
+        <div class="form-group">
+    @Html.LabelFor(model => model.Description)
+
+            <input type="text" class="form-control" id="Description" name="Description" value="@Model.Description" autocomplete="off" readonly />
+    @Html.ValidationMessageFor(model => model.Description)
+</div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Quantity)
+
+            <input type="number" class="form-control" id="Quantity" name="Quantity" value="@Model.Quantity" autocomplete="off" readonly />
+            @Html.ValidationMessageFor(model => model.Quantity)
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ItemSize) <span> (in square metres)</span>
+
+            <input type="number" class="form-control" id="ItemSize" name="ItemSize" value="@Model.ItemSize" autocomplete="off" readonly />
+            @Html.ValidationMessageFor(model => model.ItemSize)
+        </div>
+        <p>
+            <input type="submit" value="Confirm Delete" class="btn-primary" />
+        </p>
+    </fieldset>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index", "Inventory", new { @class = "btn-primary" })
+</div> 

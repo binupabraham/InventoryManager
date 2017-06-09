@@ -1,0 +1,89 @@
+﻿@model InventoryManager.UI.Models.vmInventoryListModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+<script type="text/javascript">
+   $(document).ready(function () {
+       $('.delete').click(function ()
+        {
+            if (!confirm("Do you want to remove this item?")) {
+                return false;
+            }
+        })
+    });
+</script>
+
+<div class="panel">
+    <h1>Inventory Management System</h1>
+    
+</div>
+@if (Model.WarningLimit)
+{
+    <div class="panel-warning">
+        <span class="label">Warehouse size is nearing maximum capacity. @Html.ActionLink("Configure Warehouse", "SetWarehouseLimit", "Inventory", new { @class = "orange" })</span><br /><br/>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.ActionLink("Add New Item", "AddItem", null, new { @class = "btn-primary"}) <br/><br/>
+    </div>
+</div>
+    <div class="row">
+        <div class="col-md-12">
+
+            <table class="table-bordered table">
+                <tr>
+                    <th>
+                        Code
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Size Per Unit
+                    </th>
+                    <th>
+                       Quantity
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.InventoryItemModel)
+            {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Code)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ItemSize)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditItem", new { id = item.ID }) |
+                            
+                            @Html.ActionLink("Delete", "DeleteItem", new { @id = item.ID }, new { @class="delete"}) 
+                        </td>
+                    </tr>
+                    
+            }
+                <tr>
+                    <td colspan="3">Current Warehouse Size:</td>
+                    <td>@Model.CurrentSize</td>
+                    <td />
+                </tr>
+                <tr>
+                    <td colspan="3">Total Warehouse Size:</td>
+                    <td>@Model.TotalCapacity</td>
+                    <td />
+                </tr>
+                </table>
+        </div>
+
+    </div>

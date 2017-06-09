@@ -1,0 +1,59 @@
+﻿@model  InventoryManager.UI.Models.vmInventoryModel
+
+@{
+    ViewBag.Title = "Edit Inventory Item";
+}
+<h2>@ViewBag.Title</h2>
+
+@if (Model.WarningLimit)
+{
+    <div class="panel-warning">
+        <span class="label">Warehouse size is nearing maximum capacity. @Html.ActionLink("Configure Warehouse", "SetWarehouseLimit", "Inventory", new { @class = "orange" })</span><br />
+    </div>
+}
+
+@using (Html.BeginForm("EditItem", "Inventory", FormMethod.Post))
+{
+    @Html.AntiForgeryToken();
+    @Html.ValidationSummary(true);
+    <fieldset>
+        @Html.HiddenFor(x => x.InventoryItemModel.ID)
+        <div class="form-group">
+            <label for="Code">Code</label>
+            <input type="text" class="form-control" id="Code" name="InventoryItemModel.Code" value="@Model.InventoryItemModel.Code" autocomplete="off" readonly />
+            @*@Html.TextBoxFor(model => model.Code)*@
+            @Html.ValidationMessageFor(model => model.InventoryItemModel.Code)
+        </div>
+
+        <div class="form-group">
+    @Html.LabelFor(model => model.InventoryItemModel.Description)
+
+            <input type="text" class="form-control" id="Description" name="InventoryItemModel.Description" value="@Model.InventoryItemModel.Description" autocomplete="off" />
+    @Html.ValidationMessageFor(model => model.InventoryItemModel.Description)
+</div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.InventoryItemModel.Quantity)
+
+            <input type="number" class="form-control" id="Quantity" name="InventoryItemModel.Quantity" value="@Model.InventoryItemModel.Quantity" autocomplete="off" />
+            @Html.ValidationMessageFor(model => model.InventoryItemModel.Quantity)
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.InventoryItemModel.ItemSize) <span> (in square metres)</span>
+
+            <input type="number" class="form-control" id="ItemSize" name="InventoryItemModel.ItemSize" value="@Model.InventoryItemModel.ItemSize" autocomplete="off" />
+            @Html.ValidationMessageFor(model => model.InventoryItemModel.ItemSize)
+        </div>
+
+
+        <p>
+            <input type="submit" value="Update Item" class="btn-primary" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "Inventory", new { @class = "btn-primary" })
+</div> 
